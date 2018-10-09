@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import AppBar from 'material-ui/AppBar';
 import {BookComponent,BookAddForm} from './book.jsx';
+import {BookH} from './up.jsx';
+
+
 
 var books = [
   {"isbn":98711,"name":"kitab raqm 5","price":14.99},
@@ -10,8 +12,9 @@ var books = [
   {"isbn":9875,"name":"maalouf3","price":14.99}
 ];
 
-const Index = () => {
+const Index = () => {  
   return <div>
+      <BookH />
       <BookComponent value={books} />
       <BookAddForm value={books} />   
       </div>;

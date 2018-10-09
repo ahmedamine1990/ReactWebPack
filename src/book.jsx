@@ -1,7 +1,10 @@
 import React from "react";
-import ReactDOM from "react-dom";
-
-
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 export class BookComponent extends React.Component{
     constructor(props){
@@ -12,24 +15,27 @@ export class BookComponent extends React.Component{
 
     render(){
         const listItems = this.props.value.map((item,index) =>
-            <tr key={index}>
-            <td>{item.isbn}</td>
-            <td>{item.price}</td>
-            <td>{item.name}</td>
-            </tr>
+            <TableRow key={index}>
+            <TableCell>{item.isbn}</TableCell>
+            <TableCell>{item.price}</TableCell>
+            <TableCell>{item.name}</TableCell>
+            </TableRow>
         );
 
-        return <div>
-                <p>List of Books :</p>
-                <table>
-                    <tbody>
-                    <tr>
-                        <th>isbn</th><th>price</th><th>name</th>
-                    </tr>
-                    {listItems}
-                    </tbody>
-                </table>
-            </div>
+        return <Paper>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>isbn</TableCell>
+                            <TableCell>price</TableCell>
+                            <TableCell>name</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {listItems}
+                    </TableBody>
+                </Table>
+            </Paper>
     }
 }
 
@@ -73,3 +79,23 @@ export class BookAddForm extends React.Component{
     }
 
 }
+
+
+
+const styles = {
+    root: {
+      flexGrow: 1,
+    },
+    grow: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginLeft: -12,
+      marginRight: 20,
+    },
+  };
+  
+  
+
+  
+  
