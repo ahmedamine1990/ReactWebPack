@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {BookComponent,BookAddForm} from './book.jsx';
-import {BookH} from './up.jsx';
+import {BookH,Postadmin} from './up.jsx';
 
 
 
@@ -15,6 +15,7 @@ var books = [
 const Index = () => {  
   return <div>
       <BookH />
+      <Postadmin />
       <BookComponent value={books} />
       <BookAddForm value={books} />   
       </div>;

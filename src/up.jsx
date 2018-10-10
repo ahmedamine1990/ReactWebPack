@@ -7,6 +7,27 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
 
+import { Admin,List, Datagrid, TextField, Resource } from 'react-admin';
+import jsonServerProvider from 'ra-data-json-server';
+
+const dataProvider = jsonServerProvider('http://localhost:3000/Books');
+
+export const Postadmin = () => (
+    <Admin dataProvider={dataProvider}>
+        <Resource name="posts" list={PostList} />
+    </Admin>
+);
+
+ const PostList = (props) => (
+    <List {...props}>
+        <Datagrid>
+            <TextField source="price" />
+            <TextField source="name" />
+            <TextField source="isbn" />
+        </Datagrid>
+    </List>
+);
+
 export class BookH extends React.Component{
     constructor(){
         super();
