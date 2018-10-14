@@ -7,14 +7,24 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
 
-import { Admin,List, Datagrid, TextField, Resource } from 'react-admin';
-import jsonServerProvider from 'ra-data-json-server';
+import { fetchUtils,Admin,List, Datagrid, TextField, Resource } from 'react-admin';
+import simpleRestProvider from 'ra-data-json-server';
 
-const dataProvider = jsonServerProvider('http://localhost:3000/Books');
+
+
+const httpClient = (url, options = {}) => {
+  if (!options.headers) {
+      options.headers = new Headers({ Accept: 'application/json' });
+  }
+  // add your own headers here
+  options.headers.set('Access-Control-Allow-Origin', 'http://localhost');
+  return fetchUtils.fetchJson(url, options);
+}
+const dataProvider = simpleRestProvider('http://localhost:5000', httpClient);
 
 export const Postadmin = () => (
     <Admin dataProvider={dataProvider}>
-        <Resource name="posts" list={PostList} />
+        <Resource name="books" list={PostList} />
     </Admin>
 );
 

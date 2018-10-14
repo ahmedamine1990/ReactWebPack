@@ -1,7 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider, connect } from "react-redux"; //← Bridge React and Redux
+
+
 import {BookComponent,BookAddForm} from './book.jsx';
 import {BookH,Postadmin} from './up.jsx';
+import {App} from './redux/app';
+import {store1} from './redux/store';
 
 
 
@@ -12,13 +17,19 @@ var books = [
   {"isbn":9875,"name":"maalouf3","price":14.99}
 ];
 
+
 const Index = () => {  
-  return <div>
-      <BookH />
+  return <div>    
       <Postadmin />
       <BookComponent value={books} />
       <BookAddForm value={books} />   
       </div>;
 };
 
-ReactDOM.render(<Index />, document.getElementById("index"));
+
+
+ReactDOM.render(     
+  <Provider store={store1}>
+    <App />
+  </Provider>, 
+    document.getElementById("index"));
