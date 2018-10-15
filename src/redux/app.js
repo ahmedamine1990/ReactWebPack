@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addBook, deleteBook, fetchSubredditJson} from './actions';
+import { addBook,editBook,editBookField,deleteBook, fetchSubredditJson} from './actions';
 
 
 
@@ -9,6 +9,7 @@ class BookList extends React.Component{
         super(props);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
+        this.handleCellEdit = this.handleCellEdit.bind(this);
       }
 
     handleDelete (evt) {
@@ -17,17 +18,25 @@ class BookList extends React.Component{
     }
 
     handleEdit (evt) {
-        var id = evt.target.name;
-        this.props.editBook(id);
+        var bookRank = evt.target.name;
+        var changeBook = {'isbn':98725 ,'name': 'name1', 'price':13.66}
+        this.props.editBook(changeBook,bookRank);
+    }
+
+    handleCellEdit (evt) {
+        var bookRank = evt.target.name;
+        var newValue = evt.target.value;
+        var fieldToUpdate = evt.target.key;
+        this.props.editBookField(newValue,fieldToUpdate,bookRank);
     }
 
     render(){
             var booksRow= this.props.books.map((b,i) => <tr key={i}>
                                                 <td>{b.name}</td>
-                                                <td>{b.price}</td>
+                                                <td><input type='number' key="bookPrice" value={b.price} name={i}  onChange={this.handleCellEdit} /></td>
                                                 <td>{b.isbn}</td>
-                                                <td><button onClick={this.handleEdit} name={i} text="edit" /></td>
-                                                <td><button onClick={this.handleDelete} name={i} text="delt"/></td>
+                                                <td><button onClick={this.handleEdit} name={i} value="edit" /></td>
+                                                <td><button onClick={this.handleDelete} name={i} value="delt"/></td>
                                             </tr>);
             return(
                 <table>
@@ -87,7 +96,9 @@ function  mapStateToProps (state){
 function  mapDispatchToProps(dispatch) {
     return{
         addBook: (newBook) => {dispatch(addBook(newBook))},
-        deleteBook : (Bookrank) => {dispatch(deleteBook(Bookrank))}
+        editBook: (changeBook, bookRank) => {dispatch(editBook(changeBook,bookRank))},
+        editBookField: (newValue,fieldToUpdate,bookRank) => {dispatch(editBookField(newValue,fieldToUpdate,bookRank))},
+        deleteBook : (bookRank) => {dispatch(deleteBook(bookRank))}
     }; 
 };
 
