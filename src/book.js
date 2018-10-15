@@ -1,38 +1,32 @@
+'use strict';
 import React from "react";
-import ReactDOM from "react-dom";
+import { connect } from "react-redux";
 
 
-
-export class BookComponent extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-        };
-    }
-
+export class BookList extends React.Component{
     render(){
-        const listItems = this.props.value.map((item,index) =>
-            <tr key={index}>
-            <td>{item.isbn}</td>
-            <td>{item.price}</td>
-            <td>{item.name}</td>
+        const ConnectedBookList = this.props.books.map(item => (
+            <tr>
+                <td>{item.isbn}</td>
+                <td>{item.price}</td>
+                <td>{item.name}</td>
             </tr>
-        );
-
+          ));
         return <div>
                 <p>List of Books :</p>
                 <table>
-                    <tbody>
-                    <tr>
-                        <th>isbn</th><th>price</th><th>name</th>
-                    </tr>
-                    {listItems}
-                    </tbody>
+                <tBody>
+                    <th>isbn</th><th>price</th><th>name</th>
+                    {ConnectedBookList}
+                </tBody>
                 </table>
             </div>
-    }
+    }  
 }
 
+const mapStateToProps = (state) => {
+    return {books: state.books};
+}
 
 export class BookAddForm extends React.Component{
     constructor() {
@@ -58,7 +52,6 @@ export class BookAddForm extends React.Component{
         price : this.state.price  
     }
     books.push(newBook);
-    console.log(books);
     }
 
     render(){
