@@ -6,3 +6,7 @@ export function addBook(book) {
 export function deleteBook(rank) {
     return { type: types.DELETE_BOOK, bookRank: rank }
 }
+
+export function fetchGetBooksJson(books) {
+    return { type: types.FETCHGETBOOKSJSON, Allbooks: books }
+}

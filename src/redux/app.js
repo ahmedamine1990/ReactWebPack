@@ -1,10 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addBook, deleteBook, fetchSubredditJson} from './actions';
-
+import { addBook, deleteBook,fetchGetBooksJson} from './actions';
 
 
 class BookList extends React.Component{
+    componentDidMount() {
+        fetch(`http://localhost:5000/books`)
+        .then(response => response.json())
+        .then(json => {
+          this.props.fetchGetBooksJson(json);     
+        }); 
+      }
+    
     constructor(props) {
         super(props);
         this.handleDelete = this.handleDelete.bind(this);
@@ -87,7 +94,8 @@ function  mapStateToProps (state){
 function  mapDispatchToProps(dispatch) {
     return{
         addBook: (newBook) => {dispatch(addBook(newBook))},
-        deleteBook : (Bookrank) => {dispatch(deleteBook(Bookrank))}
+        deleteBook : (bookRank) => {dispatch(deleteBook(bookRank))},
+        fetchGetBooksJson : (books) =>{dispatch(fetchGetBooksJson(books))}
     }; 
 };
 
