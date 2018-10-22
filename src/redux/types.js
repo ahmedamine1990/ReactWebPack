@@ -1,7 +1,6 @@
 const ADD_BOOK = 'ADD_BOOK';
 const EDIT_BOOK = 'EDIT_BOOK';
 const DELETE_BOOK ='DELETE_BOOK';
-<<<<<<< HEAD
 const EDIT_BOOK_FIELD = 'EDIT_BOOK_FIELD';
 
 export default{
@@ -9,13 +8,5 @@ export default{
     EDIT_BOOK,
     EDIT_BOOK_FIELD,
     DELETE_BOOK
-=======
-const FETCHGETBOOKSJSON ='FETCHGETBOOKSJSON';
-
-export default{
-    ADD_BOOK,
-    DELETE_BOOK,
-    FETCHGETBOOKSJSON
->>>>>>> 911d434416d1236981f3f32ff3367bc9dddef203
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider, connect } from "react-redux"; //← Bridge React and Redux
 
-
+import {ChatBox} from "./chatbox";
 import {UserLogin} from  './login';
 import {BookComponent,BookAddForm} from './book.jsx';
 import {BookH,Postadmin} from './up.jsx';
@@ -36,3 +36,5 @@ ReactDOM.render(
     <App />
   </Provider>, 
     document.getElementById("center"));
+
+    ReactDOM.render(<ChatBox />, document.getElementById("buttom"));

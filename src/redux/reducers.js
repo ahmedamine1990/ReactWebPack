@@ -9,7 +9,6 @@ function bookReducer(state=INITIAL_STATE,action){
     switch(action.type) {
         case types.ADD_BOOK:
           return {'books': state.books.concat(action.newBook)};
-<<<<<<< HEAD
         case types.EDIT_BOOK:
           var newArray= [];
           for(var i=0;i<state.books.length; i++){
@@ -34,10 +33,6 @@ function bookReducer(state=INITIAL_STATE,action){
             }
           };
           return {'books': newArray};
-=======
-        case types.FETCHGETBOOKSJSON:
-          return {'books': action.Allbooks };
->>>>>>> 911d434416d1236981f3f32ff3367bc9dddef203
         case types.DELETE_BOOK:      
              var newArray= [];
              for(var i=0;i<state.books.length; i++){

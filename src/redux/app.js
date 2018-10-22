@@ -1,11 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-<<<<<<< HEAD
 import { addBook,editBook,editBookField,deleteBook, fetchSubredditJson} from './actions';
 
-=======
-import { addBook, deleteBook,fetchGetBooksJson} from './actions';
->>>>>>> 911d434416d1236981f3f32ff3367bc9dddef203
 
 
 class BookList extends React.Component{
@@ -108,14 +104,9 @@ function  mapStateToProps (state){
 function  mapDispatchToProps(dispatch) {
     return{
         addBook: (newBook) => {dispatch(addBook(newBook))},
-<<<<<<< HEAD
         editBook: (changeBook, bookRank) => {dispatch(editBook(changeBook,bookRank))},
         editBookField: (newValue,fieldToUpdate,bookRank) => {dispatch(editBookField(newValue,fieldToUpdate,bookRank))},
         deleteBook : (bookRank) => {dispatch(deleteBook(bookRank))}
-=======
-        deleteBook : (bookRank) => {dispatch(deleteBook(bookRank))},
-        fetchGetBooksJson : (books) =>{dispatch(fetchGetBooksJson(books))}
->>>>>>> 911d434416d1236981f3f32ff3367bc9dddef203
     }; 
 };
 
