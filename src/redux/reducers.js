@@ -7,6 +7,8 @@ const INITIAL_STATE = {'books':[]};
 
 function bookReducer(state=INITIAL_STATE,action){
     switch(action.type) {
+        case types.GET_BOOKS:
+         return {'books': action.Books};
         case types.ADD_BOOK:
           return {'books': state.books.concat(action.newBook)};
         case types.EDIT_BOOK:

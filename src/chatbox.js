@@ -7,6 +7,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
+import styles from './static/style.scss';
+
 
 export class ChatBox extends React.Component{
     constructor(props){
@@ -42,7 +44,7 @@ export class ChatBox extends React.Component{
         const msgs = this.state.messageList;
         console.log(msgs);
         return(
-            <paper className="chatBox">
+            <div className={styles.Boxchat}>
                 <h3>My chat Room React</h3>
                 <paper>
                 { 
@@ -50,10 +52,10 @@ export class ChatBox extends React.Component{
                 }
                 </paper>
                 <form className="input" onSubmit={(e) => this.submitMessage(e)}>
-                    <input type="text" ref="msg" />
-                    <input type="submit" value="Submit" />
+                    <input type="text" ref="msg" className={styles.Inputchatmessage} />
+                    <input type="submit" value="Submit" className={styles.Submitchatbutton} />
                 </form>
-            </paper>
+            </div>
         );
     }
  

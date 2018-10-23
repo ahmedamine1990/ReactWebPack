@@ -1,15 +1,20 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { addBook,editBook,editBookField,deleteBook, fetchSubredditJson} from './actions';
+import ReactDOM from "react-dom";
+
+
+import { Provider, connect } from "react-redux"; //← Bridge React and Redux
+import { addBook,editBook,editBookField,deleteBook, getBooks} from './actions';
+import {store1} from './store';
 
 
 
 class BookList extends React.Component{
     componentDidMount() {
-        fetch(`http://localhost:5000/books`)
+        fetch(`http://localhost:5000/books?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NDAzMTI3OTl9.l_KOgK2yeRo9KChnrKmauli9YTIUTnlYKGZFAMjGe4M`)
         .then(response => response.json())
         .then(json => {
-          this.props.fetchGetBooksJson(json);     
+          console.log(json);
+          this.props.getBooks(json);     
         }); 
       }
     
@@ -104,6 +109,7 @@ function  mapStateToProps (state){
 function  mapDispatchToProps(dispatch) {
     return{
         addBook: (newBook) => {dispatch(addBook(newBook))},
+        getBooks: (Books) => {dispatch(getBooks(Books))},
         editBook: (changeBook, bookRank) => {dispatch(editBook(changeBook,bookRank))},
         editBookField: (newValue,fieldToUpdate,bookRank) => {dispatch(editBookField(newValue,fieldToUpdate,bookRank))},
         deleteBook : (bookRank) => {dispatch(deleteBook(bookRank))}
@@ -121,4 +127,8 @@ export const App = () => {
     </div>
   };
 
- 
+  ReactDOM.render(     
+    <Provider store={store1}>
+      <App />
+    </Provider>, 
+      document.getElementById("center"));

@@ -7,7 +7,8 @@ import {UserLogin} from  './login';
 import {BookComponent,BookAddForm} from './book.jsx';
 import {BookH,Postadmin} from './up.jsx';
 import {App} from './redux/app';
-import {store1} from './redux/store';
+
+import styles from './static/style.scss';
 
 
 
@@ -31,10 +32,10 @@ const Index = () => {
 
 ReactDOM.render(<UserLogin />, document.getElementById("top"));
 
-ReactDOM.render(     
-  <Provider store={store1}>
-    <App />
-  </Provider>, 
-    document.getElementById("center"));
+// ReactDOM.render(     
+//   <Provider store={store1}>
+//     <App />
+//   </Provider>, 
+//     document.getElementById("center"));
 
-    ReactDOM.render(<ChatBox />, document.getElementById("buttom"));
+ReactDOM.render(<ChatBox />, document.getElementById("buttom"));
