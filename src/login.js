@@ -1,4 +1,11 @@
 import React from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+
+
+
 
 export class UserLogin extends React.Component{
     constructor(props) {
@@ -28,21 +35,30 @@ export class UserLogin extends React.Component{
         fetch('http://localhost:5000/login', OBJECT)  
         .then(res => {
             console.log(res);
-            console.log(res.body);
-            console.log(res.body.text);
-            return res.json();
+            if (res.status ==200)
+            {
+                console.log("Successful authentification");
+            }
+            else
+            {
+                console.log("Failed authentification");
+            }
         })
-        .then( resJson =>  {
-            console.log(resJson);
-            return resJson;
-        })
+      
         
     }
     render(){
-        return <form onSubmit={this.handleSubmit}>
-            <input name="username"  value={this.state.username} onChange={this.handleChange}  type="text" placeholder="Enter a username" required/>
-            <input name="password" value={this.state.password} onChange={this.handleChange} type="password" placeholder="Enter your password" required />
-            <input type="submit"  className="button is-primary is-large is-fullwidth" value="Submit"/>
-        </form>
+        return (
+            <div>
+            <MuiThemeProvider>
+            <AppBar  title="Login" />
+            <TextField hintText="Enter your Username" floatingLabelText="username" onChange = { (event,newValue) => this.setState({ username: newValue })} />
+            <br/>
+            <TextField type="password" hintText="Enter your Password" floatingLabelText="Password" onChange = {(event,newValue)  =>  this.setState({ password: newValue })} />
+            <br/>
+            <RaisedButton label="Submit" primary={true}  onClick={(event) => this.handleSubmit(event)}/>
+            </MuiThemeProvider>
+            </div>
+        )
     }
 }

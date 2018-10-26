@@ -15,6 +15,32 @@
     float:left;
   }
 
-  paper{
-
+  .appFooter{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(0,188, 212);
+    color: white;
+    text-align: center;
   }
+
+  .appHeader{
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(0,188, 188);
+    color: white;
+    text-align: center;
+  }
+
+  .appNavigation {
+    width: 15%; /* Set the width of the sidebar */
+    height: 100%;
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color:rgb(0,188, 188); /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+}
