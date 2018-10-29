@@ -2,11 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Avatar from '@material-ui/core/Avatar';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-
 import styles from './static/style.scss';
 
 
@@ -14,7 +9,8 @@ export class ChatBox extends React.Component{
     constructor(props){
         super(props);
         this.state = {messageList:[]};
-        this.submitMessage = this.submitMessage.bind(this);
+        this.submitMessageMe = this.submitMessageMe.bind(this);
+        this.submitMessageHim = this.submitMessageHim.bind(this);
     }
     
     componentDidMount() {
@@ -25,18 +21,47 @@ export class ChatBox extends React.Component{
         
     }
 
-    submitMessage(e) {
+    submitMessageMe(e) {
         e.preventDefault();
+        var currentdate = new Date(); 
+        var datetime = currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear()  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
 
         this.setState({
             messageList: this.state.messageList.concat([{
-                sender: "Ahmed Amine CHAARI",
-                content: ReactDOM.findDOMNode(this.refs.msg).value,
-                img: "http://i.imgur.com/Tj5DGiO.jpg",
-                time: Date.now(),
+                sender: "Me",
+                content: ReactDOM.findDOMNode(this.refs.msgMe).value,
+               // img: "http://i.imgur.com/Tj5DGiO.jpg",
+                time: datetime,
             }])
         }, () => {
-            ReactDOM.findDOMNode(this.refs.msg).value = "";
+            ReactDOM.findDOMNode(this.refs.msgMe).value = "";
+        });
+    }
+
+    submitMessageHim(e) {
+        e.preventDefault();
+        var currentdate = new Date(); 
+        var datetime = currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear()  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+
+        this.setState({
+            messageList: this.state.messageList.concat([{
+                sender: "Him",
+                content: ReactDOM.findDOMNode(this.refs.msgHim).value,
+               // img: "http://i.imgur.com/Tj5DGiO.jpg",
+                time: datetime,
+            }])
+        }, () => {
+            ReactDOM.findDOMNode(this.refs.msgHim).value = "";
         });
     }
      
@@ -48,11 +73,20 @@ export class ChatBox extends React.Component{
                 <h3>My chat Room React</h3>
                 <paper>
                 { 
-                    msgs.map(message =>  <ChatMessage msg={message}  />)
+                    msgs.map(message =>  
+                    message.sender == "Me" ?
+                    <ChatMessageMe msg={message}  />:
+                    <ChatMessageHim msg={message}  />
+                    )
                 }
                 </paper>
-                <form className="input" onSubmit={(e) => this.submitMessage(e)}>
-                    <input type="text" ref="msg" className={styles.Inputchatmessage} />
+                <form className="input" onSubmit={(e) => this.submitMessageMe(e)}>
+                    <input type="text" ref="msgMe" className={styles.Inputchatmessage} />
+                    <input type="submit" value="Submit" className={styles.Submitchatbutton} />
+                </form>
+
+                <form className="input" onSubmit={(e) => this.submitMessageHim(e)}>
+                    <input type="text" ref="msgHim" className={styles.Inputchatmessage} />
                     <input type="submit" value="Submit" className={styles.Submitchatbutton} />
                 </form>
             </div>
@@ -61,22 +95,19 @@ export class ChatBox extends React.Component{
  
 }
 
-export class ChatMessage extends React.Component{
-    constructor(props){
-        super(props);
-    }
-    render(){
-        return(<div>
-         <Avatar src={this.props.msg.img} />
-        <p>{this.props.msg.time} </p>
-        <Card className={this.props.msg.sender}>
-            <CardContent>
-                <Typography>
-                    {this.props.msg.content}
-                </Typography>
-            </CardContent>
-        </Card>
-        </div>
-        )
-    }
-}
+
+const ChatMessageHim = ({msg}) => (
+    <div>
+        <Avatar>YOU</Avatar>
+        <p>{msg.time} </p>
+        <p>{msg.content}</p>
+    </div>
+);
+
+const ChatMessageMe = ({msg}) => (
+    <div>
+        <Avatar>Me</Avatar>
+        <p>{msg.time} </p>
+        <p>{msg.content}</p>
+    </div>
+);

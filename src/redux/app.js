@@ -1,16 +1,11 @@
 import React from 'react';
-import ReactDOM from "react-dom";
-
-
 import { Provider, connect } from "react-redux"; //← Bridge React and Redux
 import { addBook,editBook,editBookField,deleteBook, getBooks} from './actions';
 import {store1} from './store';
 
-
-
 class BookList extends React.Component{
     componentDidMount() {
-        fetch(`http://localhost:5000/books?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NDAzMTI3OTl9.l_KOgK2yeRo9KChnrKmauli9YTIUTnlYKGZFAMjGe4M`)
+        fetch(`http://localhost:5000/books`)
         .then(response => response.json())
         .then(json => {
           console.log(json);
@@ -120,15 +115,12 @@ const ConnectedBookList =  connect(mapStateToProps,mapDispatchToProps)(BookList)
 const ConnectedBookAddForm =  connect(mapStateToProps,mapDispatchToProps)(BookAddForm);
 
 
-export const App = () => {
+ const App = () => {
     return <div>
        <ConnectedBookList/>
        <ConnectedBookAddForm/>
     </div>
   };
 
-  ReactDOM.render(     
-    <Provider store={store1}>
-      <App />
-    </Provider>, 
-      document.getElementById("center"));
+
+export const BookWithProvider = ()=>(<Provider store={store1}><App /></Provider>);

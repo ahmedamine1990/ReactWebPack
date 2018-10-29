@@ -10,6 +10,26 @@ function bookReducer(state=INITIAL_STATE,action){
         case types.GET_BOOKS:
          return {'books': action.Books};
         case types.ADD_BOOK:
+            var OBJECT = {  
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(action.newBook)
+           }
+      fetch('http://localhost:5000/books', OBJECT)  
+      .then(res => {
+          console.log(res);
+          if (res.status ==201)
+          {
+              console.log("Success to add Book");
+          }
+          else
+          {
+              console.log("Failed to add book");
+          }
+          })
           return {'books': state.books.concat(action.newBook)};
         case types.EDIT_BOOK:
           var newArray= [];

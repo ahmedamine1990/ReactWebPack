@@ -1,10 +1,5 @@
 import React from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-
-
+import { Button, Form, Grid, Header, Image, Segment } from 'semantic-ui-react';
 
 
 export class UserLogin extends React.Component{
@@ -17,10 +12,11 @@ export class UserLogin extends React.Component{
     
     handleChange (evt) {
         this.setState({ [evt.target.name]: evt.target.value });   
-        }
+    }
 
     handleSubmit(event) {
         event.preventDefault();
+        console.log(this.state.username);
         var OBJECT = {  
             method: 'POST',
             headers: {
@@ -43,21 +39,30 @@ export class UserLogin extends React.Component{
             {
                 console.log("Failed authentification");
             }
-        })
-      
-        
+        })     
     }
     render(){
         return (
-            <div>
-            <MuiThemeProvider>
-            <AppBar  title="Login" />
-            <TextField hintText="Enter your Username" floatingLabelText="username" onChange = { (event,newValue) => this.setState({ username: newValue })} />
-            <br/>
-            <TextField type="password" hintText="Enter your Password" floatingLabelText="Password" onChange = {(event,newValue)  =>  this.setState({ password: newValue })} />
-            <br/>
-            <RaisedButton label="Submit" primary={true}  onClick={(event) => this.handleSubmit(event)}/>
-            </MuiThemeProvider>
+            <div className='login-form'>
+                <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
+                    <Grid.Column style={{ maxWidth: 450 }}>
+                    <Header as='h2' color='teal' textAlign='center'>
+                        <Image src='/logo.png' /> Log-in to your account
+                    </Header>
+                    <Form size='large'>
+                        <Segment stacked>
+                            <Form.Input fluid icon='user' name='username' iconPosition='left' placeholder='E-mail address' 
+                                onChange = { (event) => this.setState({ username: event.target.value })} />
+                            <Form.Input fluid icon='lock' name='password' iconPosition='left' placeholder='Password'  type='password' 
+                                onChange = {(event)  =>  this.setState({ password: event.target.value })}/>
+                            <Button color='teal' fluid size='large'  
+                                onClick={(event) => this.handleSubmit(event)}>
+                                Login
+                            </Button>                   
+                        </Segment>
+                    </Form>
+                    </Grid.Column>
+                </Grid>        
             </div>
         )
     }

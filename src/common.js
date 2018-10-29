@@ -12,6 +12,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import styles from './static/style.scss';
 
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import {ChatBox} from "./chatbox";
+import {UserLogin} from  './login';
+import {BookWithProvider} from './redux/app';
+
 
 
 class AppHeader extends React.Component{
@@ -26,7 +32,7 @@ class AppHeader extends React.Component{
         return(
             <div className={styles.appHeader}>
                 <MuiThemeProvider>
-                <AppBar  title="Login" />
+                <AppBar  title="React Redux Apollo" />
                     <Tabs onChange={this.handleChange}>
                         <Tab label="Item One" />
                         <Tab label="Item Two" />
@@ -61,6 +67,9 @@ class AppFooter extends React.Component{
     }
 }
 
+
+
+// const BookWithProvider = ()=>(<Provider store={store1}><App /></Provider>);
 class AppNavigation extends React.Component{
     constructor(props){
         super(props);
@@ -72,25 +81,31 @@ class AppNavigation extends React.Component{
     render(){
         return(
             <div className={styles.appNavigation}>
-                <MuiThemeProvider>
-                    <List onChange={this.handleChange}>
-                        <ListItem >
-                            <ListItemText inset primary="Inbox" />
-                        </ListItem>
-                        <ListItem >
-                            <ListItemText inset primary="Inbox" />
-                        </ListItem>
-                        <ListItem >
-                            <ListItemText inset primary="Inbox" />
-                        </ListItem>
-                    </List>
-                </MuiThemeProvider>
+               <Router>
+                <div>
+                    <ul>
+                    <li>
+                        <Link to="/">Login comp</Link>
+                    </li>
+                    <li>
+                        <Link to="/box">chat Box</Link>
+                    </li>
+                    <li>
+                        <Link to="/Books">Book List</Link>
+                    </li>
+                    </ul>
+
+                    <hr />
+
+                    <Route exact path="/" component={UserLogin} />
+                    <Route path="/box" component={ChatBox} />
+                    <Route path="/Books" component={BookWithProvider} />
+                </div>
+                </Router>
             </div>
         )
     }
 }
-
-
 
 export class PageLayout extends React.Component{
     constructor(props){
