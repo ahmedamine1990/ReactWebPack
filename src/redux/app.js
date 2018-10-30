@@ -3,7 +3,7 @@ import { Provider, connect } from "react-redux"; //← Bridge React and Redux
 import { addBook,editBook,editBookField,deleteBook, getBooks} from './actions';
 import {store1} from './store';
 
-class BookList extends React.Component{
+export class BookList extends React.Component{
     componentDidMount() {
         fetch(`http://localhost:5000/books`)
         .then(response => response.json())
@@ -62,7 +62,7 @@ class BookList extends React.Component{
             )
         }
 }  
-class BookAddForm extends React.Component{
+export class BookAddForm extends React.Component{
     constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -98,29 +98,11 @@ class BookAddForm extends React.Component{
 
 }
 
-function  mapStateToProps (state){
-    return {books: state.books};
-};
-function  mapDispatchToProps(dispatch) {
-    return{
-        addBook: (newBook) => {dispatch(addBook(newBook))},
-        getBooks: (Books) => {dispatch(getBooks(Books))},
-        editBook: (changeBook, bookRank) => {dispatch(editBook(changeBook,bookRank))},
-        editBookField: (newValue,fieldToUpdate,bookRank) => {dispatch(editBookField(newValue,fieldToUpdate,bookRank))},
-        deleteBook : (bookRank) => {dispatch(deleteBook(bookRank))}
-    }; 
-};
 
-const ConnectedBookList =  connect(mapStateToProps,mapDispatchToProps)(BookList);
-const ConnectedBookAddForm =  connect(mapStateToProps,mapDispatchToProps)(BookAddForm);
-
-
- const App = () => {
+export const BookWithoutProvider = () => {
     return <div>
-       <ConnectedBookList/>
-       <ConnectedBookAddForm/>
+       <BookList/>
+       <BookAddForm/>
     </div>
   };
 
-
-export const BookWithProvider = ()=>(<Provider store={store1}><App /></Provider>);

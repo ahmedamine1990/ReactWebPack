@@ -1,10 +1,20 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link, withRouter,Redirect} from "react-router-dom";
+import { Provider, connect } from "react-redux"; //← Bridge React and Redux
+
+
+import {store1} from './redux/store';
+import { addUser,addBook,editBook,editBookField,deleteBook, getBooks} from './redux/actions';
+
+import { ChatBox } from './chatbox';
+import {BookAddForm,BookList} from './redux/app';
+
 import { Button, Form, Grid, Header, Image, Segment } from 'semantic-ui-react';
 
 
 export class UserLogin extends React.Component{
-    constructor(props) {
-        super(props);
+    constructor(props,context) {
+        super(props,context);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.state = {username: '',password:''};
@@ -16,7 +26,8 @@ export class UserLogin extends React.Component{
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log(this.state.username);
+        let name= this.state.username;
+        let passwd= this.state.password;
         var OBJECT = {  
             method: 'POST',
             headers: {
@@ -24,8 +35,8 @@ export class UserLogin extends React.Component{
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                'username': this.state.username,
-                'password': this.state.password
+                'username': name,
+                'password': passwd
             })
         }
         fetch('http://localhost:5000/login', OBJECT)  
@@ -34,6 +45,8 @@ export class UserLogin extends React.Component{
             if (res.status ==200)
             {
                 console.log("Successful authentification");
+                this.props.addUser(name,passwd);
+                this.props.history.push('./box');
             }
             else
             {
@@ -67,3 +80,45 @@ export class UserLogin extends React.Component{
         )
     }
 }
+
+function  mapStateToProps (state){
+    return {books: state.books, user : state.user, IsAuth : state.IsAuth};
+};
+function  mapDispatchToProps(dispatch) {
+    return{
+        addUser: (username, password) => {dispatch(addUser(username,password))},
+        addBook: (newBook) => {dispatch(addBook(newBook))},
+        getBooks: (Books) => {dispatch(getBooks(Books))},
+        editBook: (changeBook, bookRank) => {dispatch(editBook(changeBook,bookRank))},
+        editBookField: (newValue,fieldToUpdate,bookRank) => {dispatch(editBookField(newValue,fieldToUpdate,bookRank))},
+        deleteBook : (bookRank) => {dispatch(deleteBook(bookRank))}
+    }; 
+};
+
+
+const LoginWithProvider =  connect(mapStateToProps,mapDispatchToProps)(UserLogin);
+const BookWithProvider =connect(mapStateToProps,mapDispatchToProps)(BookList);
+const AddBookWithProvider =connect(mapStateToProps,mapDispatchToProps)(BookAddForm);
+const ChatBoxWithProvider = connect (mapStateToProps,mapDispatchToProps)(ChatBox);
+
+withRouter(LoginWithProvider)
+
+export const Ind = () => (
+        <Router>
+            <div>
+            <ul>
+                <li><Link to='/'>login</Link> </li>
+                <li><Link to='/box'>chatbox</Link></li>
+                <li><Link to='/book'>books</Link></li>
+                <li><Link to='/Addbook'>Add book</Link></li>
+            </ul>
+            <Route exact path="/" component={LoginWithProvider} />
+            <Route path="/box" component={ChatBoxWithProvider} />
+            <Route path="/book" component={BookWithProvider} />
+            <Route path="/Addbook" component={AddBookWithProvider} />
+            <Redirect from='*' to='/' />
+            </div>
+        </Router>
+);
+
+export const App = ()=>(<Provider store={store1}><Ind/></Provider>);

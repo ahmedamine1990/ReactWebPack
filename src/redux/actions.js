@@ -19,3 +19,7 @@ export function editBook(book,rank) {
 export function editBookField(value,field,rank){
     return { type: types.EDIT_BOOK_FIELD, newValue: value , fieldToUpdate: field ,bookRank: rank }
 }
+
+export function addUser(_username,_password){
+    return { type: types.ADD_USER, username: _username , password:_password }
+}
